@@ -1,0 +1,114 @@
+---
+title: "Diamond Price Analysis"
+author: "Kha"
+date: "April 30, 2017"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  library(grid)
+
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+
+  numPlots = length(plots)
+
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                    ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+
+ if (numPlots==1) {
+    print(plots[[1]])
+
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Synopsis
+
+The analysis is performed on the **diamonds** dataset. We will try to show what attributes have impact on the diamond, also if there is some correlations between price and dimensions.
+
+```{r echo = T}
+head(diamonds)
+```
+
+## Diamond price by attribute
+
+```{r}
+plotPriceByCut <- function () {
+    ggplot(diamonds, aes(factor(cut), price, fill = cut)) + 
+        geom_boxplot() +
+        ggtitle('Diamond Price by Cut') +
+        xlab('Type of Cut') + 
+        ylab('Diamond Price') +
+        theme(axis.text.x = element_text(angle = 45, hjust = 1))
+}
+
+plotPriceByClarity <- function () {
+    ggplot(diamonds, aes(factor(clarity), price, fill = clarity)) + 
+        geom_boxplot() +
+        ggtitle('Diamond Price by Clarity') +
+        xlab('Clarity') + 
+        ylab('Diamond Price') +
+        theme(axis.text.x = element_text(angle = 45, hjust = 1))
+}
+
+plotPriceByColor <- function () {
+    ggplot(diamonds, aes(factor(color), price, fill = color)) + 
+        geom_boxplot() +
+        ggtitle('Diamond Price by Color') +
+        xlab('Color') + 
+        ylab('Diamond Price')
+}
+
+multiplot(plotPriceByCut(), plotPriceByClarity(), plotPriceByColor(), cols = 2)
+```
+
+## Diamond price by dimension
+
+```{r}
+plotPriceByX <- function(color) {
+    ggplot(diamonds, aes(x = x, y = price)) +
+        geom_point(alpha = 1/20, colour = color) +
+        ggtitle('Diamond Price by X')
+}
+
+plotPriceByY <- function(color) {
+    ggplot(diamonds, aes(x = y, y = price)) +
+        geom_point(alpha = 1/20, colour = color) +
+        ggtitle('Diamond Price by Y')
+}
+
+plotPriceByDepth <- function(color) {
+    ggplot(diamonds, aes(x = depth, y = price)) +
+        geom_point(alpha = 1/20, colour = color) +
+        ggtitle('Diamond Price by Depth')
+}
+
+multiplot(plotPriceByX('red'), plotPriceByY('green'), plotPriceByDepth('blue'), cols = 2)
+```
+
+## Thank you!
