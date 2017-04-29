@@ -19,7 +19,26 @@ shinyUI(pageWithSidebar(
         colourInput("color", "Select color", value = "red")
     ),
     mainPanel(
-        plotOutput('plotByAttribute'),
-        plotOutput('plotByDim')
+        tabsetPanel(
+            id = 'dataset',
+            tabPanel(
+                'Plot',
+                plotOutput('plotByAttribute'),
+                plotOutput('plotByDim')
+            ),
+            tabPanel(
+                'Help',
+                p(
+                    'Source code:',
+                    a(href = 'https://github.com/namkha87/data-products-assignment', 'https://github.com/namkha87/data-products-assignment')
+                ),
+                p('How to use:'),
+                tags$ul(
+                    tags$li('Select diamond attribute to plot'),
+                    tags$li('Select diamond dimmension to plot'),
+                    tags$li('Select color')
+                )
+            )
+        )
     )
 ))

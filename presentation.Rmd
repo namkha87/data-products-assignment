@@ -111,4 +111,6 @@ plotPriceByDepth <- function(color) {
 multiplot(plotPriceByX('red'), plotPriceByY('green'), plotPriceByDepth('blue'), cols = 2)
 ```
 
-## Thank you!
+## How to use the application
+- The application: [https://phnkha.shinyapps.io/data-products-assignment](https://phnkha.shinyapps.io/data-products-assignment)
+- The source code: [https://github.com/namkha87/data-products-assignment](https://github.com/namkha87/data-products-assignment)

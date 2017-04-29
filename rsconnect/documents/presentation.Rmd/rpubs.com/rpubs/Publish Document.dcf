@@ -1,0 +1,8 @@
+name: Publish Document
+title:
+account: rpubs
+server: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/271850/0dd0a2a6d7364a608245d7600d251de2
+bundleId: https://api.rpubs.com/api/v1/document/271850/0dd0a2a6d7364a608245d7600d251de2
+url: http://rpubs.com/phnkha/271850
+when: 1493499968.75046
